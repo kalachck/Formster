@@ -19,8 +19,12 @@ public class FormSubmissionRepository : IFormSubmissionRepository
         await _context.SaveChangesAsync(ct);
     }
 
-    public async Task<IEnumerable<FormSubmission>> GetAllAsync(int skip, int take, CancellationToken ct) 
-        => await _context.FormSubmissions.Skip(skip).Take(take).ToListAsync(ct);
+    public async Task<IEnumerable<FormSubmission>> GetAllAsync(int take, int skip, CancellationToken ct) 
+        => await _context.FormSubmissions
+            .OrderByDescending(x => x.CreatedAt)
+            .Take(take)
+            .Skip(skip)
+            .ToListAsync(ct);
 
     public async Task<IEnumerable<FormSubmission>> SearchAsync(string? formName, string? query, CancellationToken ct)
     {
