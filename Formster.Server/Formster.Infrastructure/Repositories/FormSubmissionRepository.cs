@@ -31,10 +31,10 @@ public class FormSubmissionRepository : IFormSubmissionRepository
         var submissions = _context.FormSubmissions.AsQueryable();
         
         if (!string.IsNullOrEmpty(formName))
-            submissions = submissions.Where(x => EF.Functions.Like(x.FormName, $"%{formName}%"));
+            submissions = submissions.Where(x => EF.Functions.Like(x.FormName.ToLower(), $"%{formName.ToLower()}%"));
         
         if (!string.IsNullOrEmpty(query))
-            submissions = submissions.Where(x => x.JsonData.Contains(query));
+            submissions = submissions.Where(x => x.JsonData.Contains(query, StringComparison.OrdinalIgnoreCase));
 
         return await submissions.OrderByDescending(x => x.CreatedAt).ToListAsync(ct);
     }

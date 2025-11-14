@@ -2,7 +2,7 @@
 using Formster.Application.Utils;
 using Formster.Domain.Interfaces;
 
-namespace Formster.Application.Sqrs.Queries;
+namespace Formster.Application.Cqrs.Queries;
 
 public record SearchFormSubmissionsQuery(
     string? FormName,

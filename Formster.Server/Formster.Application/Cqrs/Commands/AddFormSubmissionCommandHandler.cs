@@ -3,9 +3,9 @@ using Formster.Application.Dtos;
 using Formster.Domain.Entities;
 using Formster.Domain.Interfaces;
 
-namespace Formster.Application.Sqrs.Commands;
+namespace Formster.Application.Cqrs.Commands;
 
-public record AddFormSubmissionCommand(FormSubmissionRequestDto RequestDto) : ICommand;
+public record AddFormSubmissionCommand(string FormName, Dictionary<string, object> JsonData) : ICommand;
 
 
 public class AddFormSubmissionCommandHandler : CommandHandler<AddFormSubmissionCommand>
@@ -19,12 +19,10 @@ public class AddFormSubmissionCommandHandler : CommandHandler<AddFormSubmissionC
     
     public override async Task HandleAsync(AddFormSubmissionCommand command, CancellationToken ct)
     {
-        var request = command.RequestDto;
-
         await _repository.AddAsync(new FormSubmission
         {
-            FormName = request.FormName,
-            JsonData = JsonSerializer.Serialize(request.JsonData)
+            FormName = command.FormName,
+            JsonData = JsonSerializer.Serialize(command.JsonData)
         }, ct);
     }
 }

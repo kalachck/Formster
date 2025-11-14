@@ -1,0 +1,14 @@
+services:
+  formster-api:
+    build:
+      context: ./Formster
+      dockerfile: Dockerfile
+    ports: 
+     - 8000:8080
+    networks:
+      - formster
+
+networks:
+  formster:
+    driver: bridge
+    

@@ -1,7 +1,7 @@
-﻿using Formster.Application.Dtos;
-using Formster.Application.Sqrs;
-using Formster.Application.Sqrs.Commands;
-using Formster.Application.Sqrs.Queries;
+﻿using Formster.Application.Cqrs;
+using Formster.Application.Cqrs.Commands;
+using Formster.Application.Cqrs.Queries;
+using Formster.Presentation.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Formster.Presentation.Controllers;
@@ -19,32 +19,30 @@ public class FormSubmissionController : ControllerBase
 
     [HttpGet("all")]
     public async Task<IActionResult> GetAll(
-        int take,
-        int skip,
+        [FromQuery] GetAllFormSubmissionsModel model,
         CancellationToken ct)
     {
-        var formSubmissions = await _localMessageBus.DispatchAsync(new GetAllForSubmissionsQuery(take, skip), ct);
+        var formSubmissions = await _localMessageBus.DispatchAsync(new GetAllForSubmissionsQuery(model.Take, model.Skip), ct);
         
         return Ok(formSubmissions);
     }
 
     [HttpGet("search")]
     public async Task<IActionResult> Search(
-        string? formName,
-        string? query,
+        [FromQuery] SearchFormSubmissionsModel model,
         CancellationToken ct)
     {
-        var formSubmissions = await _localMessageBus.DispatchAsync(new SearchFormSubmissionsQuery(formName, query), ct);
+        var formSubmissions = await _localMessageBus.DispatchAsync(new SearchFormSubmissionsQuery(model.FormName, model.Query), ct);
         
         return Ok(formSubmissions);
     }
 
     [HttpPost]
     public async Task<IActionResult> Add(
-        FormSubmissionRequestDto request,
+        AddFormSubmissionModel model,
         CancellationToken ct)
     {
-        await _localMessageBus.DispatchAsync(new AddFormSubmissionCommand(request), ct);
+        await _localMessageBus.DispatchAsync(new AddFormSubmissionCommand(model.FormName, model.JsonData), ct);
         
         return Ok();
     }

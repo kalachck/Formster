@@ -1,7 +1,7 @@
 ﻿using Formster.Application.Dtos;
-using Formster.Application.Sqrs;
-using Formster.Application.Sqrs.Commands;
-using Formster.Application.Sqrs.Queries;
+using Formster.Application.Cqrs;
+using Formster.Application.Cqrs.Commands;
+using Formster.Application.Cqrs.Queries;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Formster.Application;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Formster.Application.Sqrs;
+namespace Formster.Application.Cqrs;
 
 public interface ICommand;
 
