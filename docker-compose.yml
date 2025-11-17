@@ -1,0 +1,30 @@
+services:
+  formster-api:
+    build:
+      context: ./Formster.Server
+      dockerfile: Dockerfile
+    container_name: formster-api
+    ports: 
+     - 8000:8080
+    networks:
+      - formster
+
+  formster-client:
+    build:
+      context: ./Formster.Client
+      dockerfile: Dockerfile
+    container_name: formster-client
+    ports:
+      - 3000:3000
+    volumes:
+      - ./Formster.Client:/app
+      - /app/node_modules
+    env_file:
+      - ./Formster.Client/.env.docker
+    networks:
+      - formster
+
+networks:
+  formster:
+    driver: bridge
+    
