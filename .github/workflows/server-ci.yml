@@ -12,12 +12,12 @@ on:
       - dev
 
 jobs:
-  build_and_restore:
+  formster-api:
     runs-on: ubuntu-latest
 
     defaults:
       run:
-        working-directory: ./Formster
+        working-directory: ./Formster.Server
 
     steps:
       - name: Checkout repository

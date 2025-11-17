@@ -12,7 +12,7 @@ on:
       - dev
 
 jobs:
-  Lcp:
+  formster-client:
     runs-on: ubuntu-latest
     
     defaults:
