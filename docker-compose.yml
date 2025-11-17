@@ -1,10 +1,19 @@
 services:
   formster-api:
     build:
-      context: ./Formster
+      context: ./Formster.Server
       dockerfile: Dockerfile
     ports: 
      - 8000:8080
+    networks:
+      - formster
+
+  formster-client:
+    build:
+      context: ./Formster.Client
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
     networks:
       - formster
 

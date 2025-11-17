@@ -1,5 +1,6 @@
 ﻿using Formster.Domain.Interfaces;
 using Formster.Infrastructure.Repositories;
+using Formster.Infrastructure.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,5 +16,15 @@ public static class DependencyRegistrar
         });
 
         services.AddScoped<IFormSubmissionRepository, FormSubmissionRepository>();
+        
+        services.AddScoped<IDataSeeder, DataSeeder>();
+    }
+
+    public static async Task SeedDatabaseAsync(this IServiceProvider serviceProvider)
+    {
+        using var scope = serviceProvider.CreateScope();
+        var dataSeeder = scope.ServiceProvider.GetRequiredService<IDataSeeder>();
+
+        await dataSeeder.SeedAsync();
     }
 }

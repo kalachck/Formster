@@ -2,8 +2,8 @@
 import { ref, onMounted, computed, watch } from 'vue';
 import axios from 'axios';
 
-const API_URL_ALL = 'http://localhost:5032/formster/api/form-submission/all';
-const API_URL_SEARCH = 'http://localhost:5032/formster/api/form-submission/search';
+const API_URL_ALL = `${import.meta.env.VITE_FORM_SUBMISSION_API_URL}/all`;
+const API_URL_SEARCH = `${import.meta.env.VITE_FORM_SUBMISSION_API_URL}/search`;
 
 const PAGE_SIZE = 10; 
 
@@ -74,7 +74,6 @@ const fetchSubmissions = async (isNewSearch = false) => {
 
         allSubmissions.value = response.data.map(sub => ({
             ...sub,
-            // parsedJsonData: sub.jsonData ? JSON.parse(sub.jsonData) : {}
         }));
 
     } catch (error) {
@@ -97,6 +96,10 @@ const handleClear = () => {
     fetchSubmissions(true);
 };
 
+const handleRefresh = () => {
+    fetchSubmissions(true);
+}
+
 onMounted(() => {
     fetchSubmissions(true);
 });
@@ -116,6 +119,7 @@ onMounted(() => {
             
             <button @click="fetchSubmissions(true)" :disabled="isLoading">Search</button>
             <button @click="handleClear">Clear</button>
+            <button @click="handleRefresh">Refresh</button>
         </div>
 
         <div v-if="isLoading" class="loading-state">Loading submissions...</div>
@@ -126,7 +130,7 @@ onMounted(() => {
                 </thead>
             <tbody>
                 <tr v-for="sub in paginatedSubmissions" :key="sub.id"> 
-                    <td>{{ sub.id.substring(0, 8) }}...</td>
+                    <td>{{ sub.id}}</td>
                     <td>{{ sub.formName }}</td>
                     <td class="json-data">
                         <pre>{{ sub.jsonData }}</pre>

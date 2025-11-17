@@ -33,4 +33,6 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 
+await app.Services.SeedDatabaseAsync();
+
 app.Run();

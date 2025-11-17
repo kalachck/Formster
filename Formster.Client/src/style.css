@@ -86,6 +86,7 @@ button:focus-visible {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     font-family: Arial, sans-serif;
+    text-align: left;
 }
 
 h2 {
@@ -189,7 +190,7 @@ button[type="submit"]:disabled {
 }
 
 .submissions-list-container {
-    max-width: 1000px;
+    max-width: 1200px;
     margin: 50px auto;
     padding: 20px;
 }
@@ -258,4 +259,9 @@ button[type="submit"]:disabled {
     padding: 20px;
     font-size: 1.1em;
     color: #555;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-evenly;
 }

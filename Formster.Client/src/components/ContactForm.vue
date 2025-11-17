@@ -53,7 +53,7 @@ const handleSubmit = async () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:5032/formster/api/form-submission', body);
+            const response = await axios.post(import.meta.env.VITE_FORM_SUBMISSION_API_URL, body);
             
             console.log('Submission successful:', response.data);
             alert('Form submitted successfully!');
